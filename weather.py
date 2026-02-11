@@ -18,11 +18,11 @@ class WeatherFetcher:
         Initialize WeatherFetcher with coordinates
         
         Args:
-            latitude: Latitude coordinate
-            longitude: Longitude coordinate
+            latitude: Latitude coordinate (defaults to .env value)
+            longitude: Longitude coordinate (defaults to .env value)
         """
-        self.latitude = latitude
-        self.longitude = longitude
+        self.latitude = latitude or float(os.getenv("LATITUDE", "47.7793"))
+        self.longitude = longitude or float(os.getenv("LONGITUDE", "1.8742"))
     
     def fetch_weather(self) -> Optional[Dict]:
         """
@@ -141,12 +141,7 @@ class WeatherFetcher:
 
 if __name__ == "__main__":
     # Test the weather fetcher
-    LATITUDE = float(os.getenv("LATITUDE"))
-    LONGITUDE = float(os.getenv("LONGITUDE"))
-    if not LATITUDE or not LONGITUDE:
-        raise ValueError("Latitude and longitude not set in environment variables")
-
-    fetcher = WeatherFetcher(LATITUDE, LONGITUDE)
+    fetcher = WeatherFetcher()
     print("Fetching weather data...")
     data = fetcher.fetch_weather()
     
@@ -156,3 +151,4 @@ if __name__ == "__main__":
         print("="*50)
     else:
         print("Failed to fetch weather data")
+
