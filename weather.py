@@ -2,6 +2,10 @@ import requests
 import os
 from datetime import datetime
 from typing import Dict, Optional
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 
 class WeatherFetcher:
@@ -137,7 +141,12 @@ class WeatherFetcher:
 
 if __name__ == "__main__":
     # Test the weather fetcher
-    fetcher = WeatherFetcher(47.7793, 1.8742)
+    LATITUDE = float(os.getenv("LATITUDE"))
+    LONGITUDE = float(os.getenv("LONGITUDE"))
+    if not LATITUDE or not LONGITUDE:
+        raise ValueError("Latitude and longitude not set in environment variables")
+
+    fetcher = WeatherFetcher(LATITUDE, LONGITUDE)
     print("Fetching weather data...")
     data = fetcher.fetch_weather()
     
@@ -147,4 +156,3 @@ if __name__ == "__main__":
         print("="*50)
     else:
         print("Failed to fetch weather data")
-
