@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  weather-bot:
+    build: .
+    container_name: discord-weather-bot
+    restart: unless-stopped
+    env_file:
+      - src/.env
+    environment:
+      - TZ=Europe/Paris  # Set your timezone
+    volumes:
+      # Optional: Mount logs directory if you add logging to files
+      - ./logs:/app/logs
+    # Healthcheck to ensure bot is running
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
