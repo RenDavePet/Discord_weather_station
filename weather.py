@@ -21,8 +21,8 @@ class WeatherFetcher:
             latitude: Latitude coordinate (defaults to .env value)
             longitude: Longitude coordinate (defaults to .env value)
         """
-        self.latitude = latitude or float(os.getenv("LATITUDE", "47.7793"))
-        self.longitude = longitude or float(os.getenv("LONGITUDE", "1.8742"))
+        self.latitude = latitude or float(os.getenv("LATITUDE"))
+        self.longitude = longitude or float(os.getenv("LONGITUDE"))
     
     def fetch_weather(self) -> Optional[Dict]:
         """
